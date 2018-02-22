@@ -1,0 +1,20 @@
+version: "2"
+services:
+    apache:
+        build: .
+        ports: 
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+            - ./html:/var/www/html/
+        links:
+            - mysql
+    mysql:
+        image: mysql:5.6
+        ports: 
+            - "3306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
